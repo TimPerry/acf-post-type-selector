@@ -23,9 +23,7 @@ class acf_field_post_type_selector extends acf_Field
     	$this->name = 'post_type_selector';
 		$this->label = __('Post Type Selector');
 		$this->defaults = array(
-			// add default here to merge into your field. 
-			// This makes life easy when creating the field options as you don't need to use any if( isset('') ) logic. eg:
-			//'preview_size' => 'thumbnail'
+			'select_type' => 'Checkboxes',
 		);
 		
    	}
@@ -48,37 +46,43 @@ class acf_field_post_type_selector extends acf_Field
 	
 	function create_options($key, $field)
 	{
+		
 		// defaults?
-		/*
 		$field = array_merge($this->defaults, $field);
-		*/
 		
-		
-		// Create Field Options HTML
-		?>
-<tr class="field_option field_option_<?php echo $this->name; ?>">
-	<td class="label">
-		<label><?php _e("Preview Size",'acf'); ?></label>
-		<p class="description"><?php _e("Thumbnail is advised",'acf'); ?></p>
-	</td>
-	<td>
-		<?php
-		
-		do_action('acf/create_field', array(
-			'type'		=>	'radio',
-			'name'		=>	'fields['.$key.'][preview_size]',
-			'value'		=>	$field['preview_size'],
-			'layout'	=>	'horizontal',
-			'choices'	=>	array(
-				'thumbnail' => __('Thumbnail'),
-				'something_else' => __('Something Else'),
-			)
-		));
+		// key is needed in the field names to correctly save the data
+		$key = $field['name'];
 		
 		?>
-	</td>
-</tr>
+		
+		<tr class="field_option field_option_<?php echo $this->name; ?>">
+			<td class="label">
+				<label><?php _e("Selector Type",'acf'); ?></label>
+				<p>How would you like to select the post type?</p>
+			</td>
+			<td>
+				
+				<?php
+		
+				do_action('acf/create_field', array(
+					'type' => 'select',
+					'name' => 'fields['.$key.'][select_type]',
+					'value' => $field['select_type'],
+					'layout' => 'horizontal',
+					'choices' => array( 
+						'select' => __( 'Select' ), 
+						'radio' => __( 'Radio' ),
+						'check' => __( 'Checkboxes' ),
+					)
+				));
+				
+				?>
+	
+			</td>
+		</tr>
+		
 		<?php
+		
 	}
 	
 	
@@ -115,20 +119,85 @@ class acf_field_post_type_selector extends acf_Field
 	
 	function create_field($field)
 	{
+		
 		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
-		
-		// perhaps use $field['preview_size'] to alter the markup?
-		
-		
+		$field = array_merge( $this->defaults, $field );
+				
+		$post_types = get_post_types( array(
+			'public' => true,
+		), 'objects' );
+
 		// create Field HTML
-		?>
-		<div>
+		$checked = array( );
+
+		switch ( $field[ 'select_type' ] ) {
+		
+			case 'select':
+					
+				echo '<select id="' . $field[ 'name' ] . '" class="' . $field[ 'class' ] . '" name="' . $field[ 'name' ] . '">';
+				
+				$checked[ $field[ 'value' ] ] = 'selected="selected"';
+				
+				foreach( $post_types as $post_type ) {
+				
+					echo '<option ' . $checked[ $post_type->name ] . ' value="' . $post_type->name . '">' . $post_type->labels->name . '</option>';
+				
+				}
+				
+				echo '</select>';
+				
+			break;
 			
-		</div>
-		<?php
+			case 'radio':
+				
+				echo '<ul class="radio_list radio horizontal">';
+				
+				$checked[ $field[ 'value' ] ] = 'checked="checked"';
+				
+				foreach( $post_types as $post_type ) {
+				
+				?>
+				
+					<li><input type="radio" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
+					
+				<?php
+				
+				}
+				
+				echo '</ul>';
+				
+			
+			break;
+			
+			case 'check':
+			
+				echo '<ul class="checkbox_list checkbox">';
+				
+ 				if ( ! empty( $field[ 'value'] ) ) {
+
+					foreach(  $field[ 'value' ] as $val ) {
+					
+						$checked[ $val ] = 'checked="checked"';
+					
+					}
+				
+				}
+				
+				foreach( $post_types as $post_type ) {
+				
+				?>
+								
+					<li><input type="checkbox" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
+				<?php
+				
+				}
+				
+				echo '</ul>';
+			
+			break;
+			
+		}
+		
 	}
 	
 	
