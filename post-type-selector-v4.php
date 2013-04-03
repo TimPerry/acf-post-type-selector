@@ -1,6 +1,6 @@
 <?php
 
-class acf_field_{{field_name}} extends acf_field
+class acf_field_post-type-selector extends acf_field
 {
 	// vars
 	var $settings, // will hold info such as dir / path
@@ -19,8 +19,8 @@ class acf_field_{{field_name}} extends acf_field
 	function __construct()
 	{
 		// vars
-		$this->name = '{{field_name}}';
-		$this->label = __('{{field_label}}');
+		$this->name = 'post-type-selector';
+		$this->label = __('Post Type Selector');
 		$this->category = __("Basic",'acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
 			// add default here to merge into your field. 
@@ -145,18 +145,18 @@ class acf_field_{{field_name}} extends acf_field
 		
 		
 		// register acf scripts
-		wp_register_script( 'acf-input-{{field_name}}', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
-		wp_register_style( 'acf-input-{{field_name}}', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
+		wp_register_script( 'acf-input-post-type-selector', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
+		wp_register_style( 'acf-input-post-type-selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
 		
 		
 		// scripts
 		wp_enqueue_script(array(
-			'acf-input-{{field_name}}',	
+			'acf-input-post-type-selector',	
 		));
 
 		// styles
 		wp_enqueue_style(array(
-			'acf-input-{{field_name}}',	
+			'acf-input-post-type-selector',	
 		));
 		
 		
@@ -372,6 +372,6 @@ class acf_field_{{field_name}} extends acf_field
 
 
 // create field
-new acf_field_{{field_name}}();
+new acf_field_post-type-selector();
 
 ?>

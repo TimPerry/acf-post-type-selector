@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Advanced Custom Fields: {{field_name}}
-Plugin URI: {{git_url}}
-Description: {{short_description}}
+Plugin Name: Advanced Custom Fields: post-type-selector
+Plugin URI: https://github.com/iceicetimmy/acf-post-type-selector
+Description: Provides the option to select a single or multiple post types
 Version: 1.0.0
-Author: {{full_name}}
-Author URI: {{website}}
+Author: Tim Perry (@iceicetimmy)
+Author URI: http://www.forepoint.co.uk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -25,7 +25,7 @@ class acf_field_location_plugin
 	{
 		// set text domain
 		/*
-		$domain = 'acf-{{field_name}}';
+		$domain = 'acf-post-type-selector';
 		$mofile = trailingslashit(dirname(__File__)) . 'lang/' . $domain . '-' . get_locale() . '.mo';
 		load_textdomain( $domain, $mofile );
 		*/
@@ -52,7 +52,7 @@ class acf_field_location_plugin
 	{
 		if(function_exists('register_field'))
 		{ 
-			register_field('acf_field_{{field_name}}', dirname(__File__) . '/{{field_name}}-v3.php');
+			register_field('acf_field_post-type-selector', dirname(__File__) . '/post-type-selector-v3.php');
 		}
 	}
 	
@@ -66,11 +66,11 @@ class acf_field_location_plugin
 	
 	function register_fields()
 	{
-		include_once('{{field_name}}-v4.php');
+		include_once('post-type-selector-v4.php');
 	}
 	
 }
 
-new acf_field_{{field_name}}_plugin();
+new acf_field_post-type-selector_plugin();
 		
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class acf_field_{{field_name}} extends acf_Field
+class acf_field_post-type-selector extends acf_Field
 {
 
 	/*--------------------------------------------------------------------------------------
@@ -20,8 +20,8 @@ class acf_field_{{field_name}} extends acf_Field
     	parent::__construct($parent);
     	
     	// set name / title
-    	$this->name = '{{field_name}}';
-		$this->label = __('{{field_label}}');
+    	$this->name = 'post-type-selector';
+		$this->label = __('Post Type Selector');
 		$this->defaults = array(
 			// add default here to merge into your field. 
 			// This makes life easy when creating the field options as you don't need to use any if( isset('') ) logic. eg:
@@ -168,11 +168,11 @@ class acf_field_{{field_name}} extends acf_Field
 		
 		
 		// register acf scripts
-		wp_register_script( 'acf-input-{{field_name}}', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
+		wp_register_script( 'acf-input-post-type-selector', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
 		
 		// scripts
 		wp_enqueue_script(array(
-			'acf-input-{{field_name}}',	
+			'acf-input-post-type-selector',	
 		));
 
 		
@@ -183,11 +183,11 @@ class acf_field_{{field_name}} extends acf_Field
 		// Note: This function can be removed if not used
 		
 		
-		wp_register_style( 'acf-input-{{field_name}}', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
+		wp_register_style( 'acf-input-post-type-selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
 		
 		// styles
 		wp_enqueue_style(array(
-			'acf-input-{{field_name}}',	
+			'acf-input-post-type-selector',	
 		));
 	}
 
