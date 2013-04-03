@@ -2,7 +2,11 @@
 
 class acf_field_post_type_selector extends acf_Field
 {
-
+	
+	const SELECTOR_TYPE_SELECT = 0;
+	const SELECTOR_TYPE_RADIO = 1;
+	const SELECTOR_TYPE_CHECKBOXES = 2;
+	
 	/*--------------------------------------------------------------------------------------
 	*
 	*	Constructor
@@ -70,9 +74,9 @@ class acf_field_post_type_selector extends acf_Field
 					'value' => $field['select_type'],
 					'layout' => 'horizontal',
 					'choices' => array( 
-						'select' => __( 'Select' ), 
-						'radio' => __( 'Radio' ),
-						'check' => __( 'Checkboxes' ),
+						acf_field_post_type_selector::SELECTOR_TYPE_SELECT => __( 'Select' ), 
+						acf_field_post_type_selector::SELECTOR_TYPE_RADIO => __( 'Radio' ),
+						acf_field_post_type_selector::SELECTOR_TYPE_CHECKBOXES => __( 'Checkboxes' ),
 					)
 				));
 				
@@ -132,7 +136,7 @@ class acf_field_post_type_selector extends acf_Field
 
 		switch ( $field[ 'select_type' ] ) {
 		
-			case 'select':
+			case acf_field_post_type_selector::SELECTOR_TYPE_SELECT:
 					
 				echo '<select id="' . $field[ 'name' ] . '" class="' . $field[ 'class' ] . '" name="' . $field[ 'name' ] . '">';
 				
@@ -148,7 +152,7 @@ class acf_field_post_type_selector extends acf_Field
 				
 			break;
 			
-			case 'radio':
+			case acf_field_post_type_selector::SELECTOR_TYPE_RADIO:
 				
 				echo '<ul class="radio_list radio horizontal">';
 				
@@ -169,7 +173,7 @@ class acf_field_post_type_selector extends acf_Field
 			
 			break;
 			
-			case 'check':
+			case acf_field_post_type_selector::SELECTOR_TYPE_CHECKBOXES:
 			
 				echo '<ul class="checkbox_list checkbox">';
 				
