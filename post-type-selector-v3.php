@@ -1,6 +1,6 @@
 <?php
 
-class acf_field_post-type-selector extends acf_Field
+class acf_field_post_type_selector extends acf_Field
 {
 
 	/*--------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ class acf_field_post-type-selector extends acf_Field
     	parent::__construct($parent);
     	
     	// set name / title
-    	$this->name = 'post-type-selector';
+    	$this->name = 'post_type_selector';
 		$this->label = __('Post Type Selector');
 		$this->defaults = array(
 			// add default here to merge into your field. 
@@ -168,11 +168,11 @@ class acf_field_post-type-selector extends acf_Field
 		
 		
 		// register acf scripts
-		wp_register_script( 'acf-input-post-type-selector', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
+		wp_register_script( 'acf-input-post_type_selector', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
 		
 		// scripts
 		wp_enqueue_script(array(
-			'acf-input-post-type-selector',	
+			'acf-input-post_type_selector',	
 		));
 
 		
@@ -183,11 +183,11 @@ class acf_field_post-type-selector extends acf_Field
 		// Note: This function can be removed if not used
 		
 		
-		wp_register_style( 'acf-input-post-type-selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
+		wp_register_style( 'acf-input-post_type_selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
 		
 		// styles
 		wp_enqueue_style(array(
-			'acf-input-post-type-selector',	
+			'acf-input-post_type_selector',	
 		));
 	}
 
