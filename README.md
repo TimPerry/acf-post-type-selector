@@ -39,6 +39,28 @@ This add-on can be treated as both a WP plugin and a theme include.
     
         }
 
+## Usage
+
+### Get Field Value
+```
+$post_type_var = 'post_type';
+$post_type = get_sub_field( $post_type_var );
+```
+
+### Get Field Value and Display Label
+
+```
+<?php
+// get post type fields
+$post_type_var = 'post_type';
+$post_type = get_sub_field( $post_type_var );
+
+// get post type label
+$post_type_object = get_post_type_object( $post_type ); ?>
+
+<li><a href="<?php echo get_post_type_archive_link( $post_type ); ?>"><?php echo $post_type_object->label; ?></a></li>
+```
+
 ## Changelog
 
 ### 0.0.1
