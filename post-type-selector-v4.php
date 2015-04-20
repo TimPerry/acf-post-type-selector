@@ -120,6 +120,16 @@ class acf_field_post_type_selector extends acf_field
 		$post_types = get_post_types( array(
 			'public' => true,
 		), 'objects' );
+		
+		// not required: add emmpty/none value
+		if (!$field['required']) {
+			$obj = new stdClass();
+			$obj->name = "";
+			$obj->labels = new stdClass();
+			$obj->labels->name = "None";
+			array_unshift ( $post_types, $obj);
+			
+		}
 
 		// create Field HTML
 		$checked = array( );
