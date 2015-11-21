@@ -16,6 +16,7 @@ Provides the option to select a single or multiple post types
 
 This add-on will work with:
 
+* version 5 and up
 * version 4 and up
 * version 3 and bellow
 
