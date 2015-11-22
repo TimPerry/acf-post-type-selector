@@ -1,9 +1,9 @@
 # Advanced Custom Fields: acf-post-type-selector Field
 
-* **Contributors:** [@timkinperry](https://github.com/timkinperry), [@shaunbent](https://github.com/shaunbent)
+* **Contributors:** [@timkinperry](https://github.com/timkinperry), [@shaunbent](https://github.com/shaunbent), @emaildano, @rafegoldberg, @thomasdebruin
 * **Tags:** ACF, Post Type Selector
 * **Requires at least:** 3.4
-* **Tested up to:** 4.0.1
+* **Tested up to:** 5.0.0
 * **Stable tag:** trunk
 * **License:** GPLv2 or later
 * **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +63,8 @@ $post_type_object = get_post_type_object( $post_type ); ?>
 ```
 
 ## Changelog
+### 1.0.0
+* Support for v5
 
 ### 0.0.1
 * Initial Release.
