@@ -1,15 +1,15 @@
 <?php
 
 class acf_field_post_type_selector extends acf_field {
-	
+
 	const SELECTOR_TYPE_SELECT = 0;
 	const SELECTOR_TYPE_RADIO = 1;
 	const SELECTOR_TYPE_CHECKBOXES = 2;
-	
+
 	// vars
 	var $settings, // will hold info such as dir / path
 		$defaults; // will hold default field options
-	
+
 	/*
 	*  __construct
 	*
@@ -22,32 +22,32 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	n/a
 	*  @return	n/a
 	*/
-	
+
 	function __construct() {
-		
+
 		// vars
 		$this->name = 'post_type_selector';
 		$this->label = __('Post Type Selector');
 		$this->category = __("Relational",'acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
-			'select_type' => 'Checkboxes',
+			'select_type' => self::SELECTOR_TYPE_CHECKBOXES,
 		);
-		
-		
+
+
 		// do not delete!
     	parent::__construct();
-    	
-    	
+
+
     	// settings
 		$this->settings = array(
-			'path' => apply_filters('acf/helpers/get_path', __FILE__),
-			'dir' => apply_filters('acf/helpers/get_dir', __FILE__),
+			'path' => plugin_dir_path( __FILE__),
+			'dir' => plugin_dir_url( __FILE__ ),
 			'version' => '1.0.0'
 		);
-    	
+
 	}
-	
-	
+
+
 	/*
 	*  render_field_settings()
 	*
@@ -60,9 +60,9 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the $field being edited
 	*  @return	n/a
 	*/
-	
+
 	function render_field_settings( $field ) {
-		
+
 		/*
 		*  acf_render_field_setting
 		*
@@ -72,47 +72,29 @@ class acf_field_post_type_selector extends acf_field {
 		*  More than one setting can be added by copy/paste the above code.
 		*  Please note that you must also have a matching $defaults value for the field name (font_size)
 		*/
-		
+
+
 		// defaults?
 		$field = array_merge($this->defaults, $field);
-		
+
 		// key is needed in the field names to correctly save the data
 		$key = $field['name'];
-		
-		?>
-		
-		<tr class="field_option field_option_<?php echo $this->name; ?>">
-			<td class="label">
-				<label><?php _e("Selector Type",'acf'); ?></label>
-				<p>How would you like to select the post type?</p>
-			</td>
-			<td>
-				
-				<?php
-		
-				do_action('acf/create_field', array(
-					'type' => 'select',
-					'name' => 'fields['.$key.'][select_type]',
-					'value' => $field['select_type'],
-					'layout' => 'horizontal',
-					'choices' => array( 
-						acf_field_post_type_selector::SELECTOR_TYPE_SELECT => __( 'Select' ), 
-						acf_field_post_type_selector::SELECTOR_TYPE_RADIO => __( 'Radio' ),
-						acf_field_post_type_selector::SELECTOR_TYPE_CHECKBOXES => __( 'Checkboxes' ),
-					)
-				));
-				
-				?>
-	
-			</td>
-		</tr>
-		
-		<?php
 
+		acf_render_field_setting( $field, array(
+			'label'			=> __("Selector Type",'acf'),
+			'instructions'	=> 'How would you like to select the post type?',
+			'type'			=> 'select',
+			'name'			=> 'fields['.$key.'][select_type]',
+			'choices' => array(
+				acf_field_post_type_selector::SELECTOR_TYPE_SELECT => __( 'Select' ),
+				acf_field_post_type_selector::SELECTOR_TYPE_RADIO => __( 'Radio' ),
+				acf_field_post_type_selector::SELECTOR_TYPE_CHECKBOXES => __( 'Checkboxes' ),
+			)
+		));
 	}
-	
-	
-	
+
+
+
 	/*
 	*  render_field()
 	*
@@ -127,15 +109,16 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the $field being edited
 	*  @return	n/a
 	*/
-	
+
 	function render_field( $field ) {
 		// defaults?
 		$field = array_merge( $this->defaults, $field );
-				
+
 		$post_types = get_post_types( array(
 			'public' => true,
 		), 'objects' );
-		
+
+
 		// not required: add emmpty/none value
 		if (!$field['required']) {
 			$obj = new stdClass();
@@ -143,82 +126,80 @@ class acf_field_post_type_selector extends acf_field {
 			$obj->labels = new stdClass();
 			$obj->labels->name = "None";
 			array_unshift ( $post_types, $obj);
-			
+
 		}
 
 		// create Field HTML
 		$checked = array( );
 
 		switch ( $field[ 'select_type' ] ) {
-		
+
 			case acf_field_post_type_selector::SELECTOR_TYPE_SELECT:
-					
+
 				echo '<select id="' . $field[ 'name' ] . '" class="' . $field[ 'class' ] . '" name="' . $field[ 'name' ] . '">';
-				
+
 				$checked[ $field[ 'value' ] ] = 'selected="selected"';
-				
+
 				foreach( $post_types as $post_type ) {
-				
-					echo '<option ' . $checked[ $post_type->name ] . ' value="' . $post_type->name . '">' . $post_type->labels->name . '</option>';
-				
+					echo '<option ' . (isset($checked[ $post_type->name ]) ? $checked [ $post_type->name ] : null) . ' value="' . $post_type->name . '">' . $post_type->labels->name . '</option>';
 				}
-				
+
 				echo '</select>';
-				
+
 			break;
-			
+
 			case acf_field_post_type_selector::SELECTOR_TYPE_RADIO:
-				
+
 				echo '<ul class="radio_list radio horizontal">';
-				
+
 				$checked[ $field[ 'value' ] ] = 'checked="checked"';
-				
+
 				foreach( $post_types as $post_type ) {
-				
+
 				?>
-				
+
 					<li><input type="radio" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
-					
+
 				<?php
-				
+
 				}
-				
+
 				echo '</ul>';
-				
-			
+
+
 			break;
-			
+
 			case acf_field_post_type_selector::SELECTOR_TYPE_CHECKBOXES:
-			
+
 				echo '<ul class="checkbox_list checkbox">';
-				
+
  				if ( ! empty( $field[ 'value'] ) ) {
 
 					foreach(  $field[ 'value' ] as $val ) {
-					
+
 						$checked[ $val ] = 'checked="checked"';
-					
+
 					}
-				
+
 				}
-				
+
 				foreach( $post_types as $post_type ) {
-				
+
 				?>
-								
+
 					<li><input type="checkbox" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
 				<?php
-				
+
 				}
-				
+
 				echo '</ul>';
-			
+
 			break;
-			
+
 		}
 	}
-	
-		
+
+
 	/*
 	*  input_admin_enqueue_scripts()
 	*
@@ -236,27 +217,27 @@ class acf_field_post_type_selector extends acf_field {
 	function input_admin_enqueue_scripts()
 	{
 		// Note: This function can be removed if not used
-		
-		
+
+
 		// register acf scripts
 		wp_register_script( 'acf-input-post_type_selector', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
-		wp_register_style( 'acf-input-post_type_selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
-		
-		
+		wp_register_style( 'acf-input-post_type_selector', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] );
+
+
 		// scripts
 		wp_enqueue_script(array(
-			'acf-input-post_type_selector',	
+			'acf-input-post_type_selector',
 		));
 
 		// styles
 		wp_enqueue_style(array(
-			'acf-input-post_type_selector',	
+			'acf-input-post_type_selector',
 		));
-		
-		
+
+
 	}
-	
-	
+
+
 	/*
 	*  input_admin_head()
 	*
@@ -272,15 +253,15 @@ class acf_field_post_type_selector extends acf_field {
 	*/
 
 	function input_admin_head() {
-		// Note: This function can be removed if not used	
+		// Note: This function can be removed if not used
 	}
-	
-	
+
+
 	/*
    	*  input_form_data()
    	*
    	*  This function is called once on the 'input' page between the head and footer
-   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
+   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and
    	*  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
    	*  seen on comments / user edit forms on the front end. This function will always be called, and includes
    	*  $args that related to the current screen such as $args['post_id']
@@ -292,18 +273,18 @@ class acf_field_post_type_selector extends acf_field {
    	*  @param	$args (array)
    	*  @return	n/a
    	*/
-   	
+
    	/*
-   	
+
    	function input_form_data( $args ) {
-	   	
-		
-	
+
+
+
    	}
-   	
+
    	*/
-	
-	
+
+
 	/*
 	*  input_admin_footer()
 	*
@@ -319,16 +300,16 @@ class acf_field_post_type_selector extends acf_field {
 	*/
 
 	/*
-		
+
 	function input_admin_footer() {
-	
-		
-		
+
+
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  field_group_admin_enqueue_scripts()
 	*
@@ -344,14 +325,14 @@ class acf_field_post_type_selector extends acf_field {
 	*/
 
 	/*
-	
+
 	function field_group_admin_enqueue_scripts() {
-		
+
 	}
-	
+
 	*/
 
-	
+
 	/*
 	*  field_group_admin_head()
 	*
@@ -367,11 +348,11 @@ class acf_field_post_type_selector extends acf_field {
 	*/
 
 	/*
-	
+
 	function field_group_admin_head() {
-	
+
 	}
-	
+
 	*/
 
 
@@ -389,16 +370,16 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$value
 	*/
-	
-	
+
+
 	function load_value( $value, $post_id, $field ) {
-		
+
 		return $value;
-		
+
 	}
-	
-	
-	
+
+
+
 	/*
 	*  update_value()
 	*
@@ -413,14 +394,14 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$value
 	*/
-	
+
 	function update_value( $value, $post_id, $field ) {
-		
+
 		return $value;
-		
+
 	}
-	
-	
+
+
 	/*
 	*  format_value()
 	*
@@ -436,23 +417,23 @@ class acf_field_post_type_selector extends acf_field {
 	*
 	*  @return	$value (mixed) the modified value
 	*/
-		
-	
+
+
 	function format_value( $value, $post_id, $field )
 	{
 		// defaults?
 		/*
 		$field = array_merge($this->defaults, $field);
 		*/
-		
+
 		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
+
+
 		// Note: This function can be removed if not used
 		return $value;
 	}
-	
-	
+
+
 	/*
 	*  format_value_for_api()
 	*
@@ -468,23 +449,23 @@ class acf_field_post_type_selector extends acf_field {
 	*
 	*  @return	$value	- the modified value
 	*/
-	
+
 	function format_value_for_api( $value, $post_id, $field )
 	{
 		// defaults?
 		/*
 		$field = array_merge($this->defaults, $field);
 		*/
-		
+
 		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
+
+
 		// Note: This function can be removed if not used
 		return $value;
 	}
 
-	
-	
+
+
 	/*
 	*  validate_value()
 	*
@@ -502,33 +483,33 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$input (string) the corresponding input name for $_POST value
 	*  @return	$valid
 	*/
-	
+
 	/*
-	
+
 	function validate_value( $valid, $value, $field, $input ){
-		
+
 		// Basic usage
 		if( $value < $field['custom_minimum_setting'] )
 		{
 			$valid = false;
 		}
-		
-		
+
+
 		// Advanced usage
 		if( $value < $field['custom_minimum_setting'] )
 		{
 			$valid = __('The value is too little!','acf-cf7'),
 		}
-		
-		
+
+
 		// return
 		return $valid;
-		
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  delete_value()
 	*
@@ -543,18 +524,18 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$key (string) the $meta_key which the value was deleted
 	*  @return	n/a
 	*/
-	
+
 	/*
-	
+
 	function delete_value( $post_id, $key ) {
-		
-		
-		
+
+
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  load_field()
 	*
@@ -562,19 +543,19 @@ class acf_field_post_type_selector extends acf_field {
 	*
 	*  @type	filter
 	*  @date	23/01/2013
-	*  @since	3.6.0	
+	*  @since	3.6.0
 	*
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$field
 	*/
-	
+
 	function load_field( $field )
 	{
 		// Note: This function can be removed if not used
 		return $field;
 	}
-	
-	
+
+
 	/*
 	*  update_field()
 	*
@@ -587,14 +568,14 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$field
 	*/
-	
-	function update_field( $field, $post_id )
+
+	function update_field( $field )
 	{
 		// Note: This function can be removed if not used
 		return $field;
 	}
-	
-	
+
+
 	/*
 	*  delete_field()
 	*
@@ -607,18 +588,18 @@ class acf_field_post_type_selector extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	n/a
 	*/
-	
+
 	/*
-	
+
 	function delete_field( $field ) {
-		
-		
-		
-	}	
-	
+
+
+
+	}
+
 	*/
-	
-	
+
+
 }
 
 
