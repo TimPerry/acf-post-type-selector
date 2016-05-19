@@ -1,6 +1,6 @@
 # Advanced Custom Fields: acf-post-type-selector Field
 
-* **Contributors:** [@timkinperry](https://github.com/timkinperry), [@shaunbent](https://github.com/shaunbent), @emaildano, @rafegoldberg, @thomasdebruin
+* **Contributors:** [@timperry](https://github.com/timperry), [@shaunbent](https://github.com/shaunbent), @emaildano, @rafegoldberg, @thomasdebruin, @gnowland 
 * **Tags:** ACF, Post Type Selector
 * **Requires at least:** 3.4
 * **Tested up to:** 5.0.0
