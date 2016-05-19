@@ -77,14 +77,11 @@ class acf_field_post_type_selector extends acf_field {
 		// defaults?
 		$field = array_merge($this->defaults, $field);
 
-		// key is needed in the field names to correctly save the data
-		$key = $field['name'];
-
 		acf_render_field_setting( $field, array(
 			'label'			=> __("Selector Type",'acf'),
 			'instructions'	=> 'How would you like to select the post type?',
 			'type'			=> 'select',
-			'name'			=> 'fields['.$key.'][select_type]',
+			'name'			=> 'select_type',
 			'choices' => array(
 				acf_field_post_type_selector::SELECTOR_TYPE_SELECT => __( 'Select' ),
 				acf_field_post_type_selector::SELECTOR_TYPE_RADIO => __( 'Radio' ),
