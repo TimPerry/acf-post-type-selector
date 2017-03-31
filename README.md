@@ -32,7 +32,17 @@ This add-on can be treated as both a WP plugin and a theme include.
 1. Copy the 'acf-post-type-selector' folder into your theme folder (can use sub folders). You can place the folder anywhere inside the 'wp-content' directory
 2. Edit your functions.php file and add the code below (Make sure the path is correct to include the acf-post-type-selector.php file)
 
+##### ACF Version 4
         add_action( 'acf/register_fields', 'my_register_fields' );
+
+        function my_register_fields() {
+	
+             include_once( 'acf-post-type-selector}/acf-post-type-selector.php' );
+    
+        }
+        
+##### ACF Version 5
+        add_action( 'acf/include_fields', 'my_register_fields' );
 
         function my_register_fields() {
 	
