@@ -70,6 +70,7 @@ class acf_field_post_type_selector_plugin
 	function include_field_types()
 	{
 		include_once('post-type-selector-v5.php');
+		include_once('taxonomy-selector-v5.php');
 	}
 	
 	/*
