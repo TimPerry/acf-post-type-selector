@@ -36,27 +36,6 @@ class acf_field_post_type_selector_plugin
 
 		// version 4+
 		add_action('acf/register_fields', array($this, 'register_fields'));	
-
-		
-		// version 3-
-		add_action( 'init', array( $this, 'init' ));
-	}
-	
-	
-	/*
-	*  Init
-	*
-	*  @description: 
-	*  @since: 3.6
-	*  @created: 1/04/13
-	*/
-	
-	function init()
-	{
-		if(function_exists('register_field'))
-		{ 
-			register_field('acf_field_post_type_selector', dirname(__File__) . '/post-type-selector-v3.php');
-		}
 	}
 	
 	/*
