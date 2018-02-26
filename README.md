@@ -2,7 +2,7 @@
 
 * **Contributors:** [@timperry](https://github.com/timperry), [@shaunbent](https://github.com/shaunbent), @emaildano, @rafegoldberg, @thomasdebruin, @gnowland 
 * **Tags:** ACF, Post Type Selector
-* **Requires at least:** 3.4
+* **Requires at least:** 4.0
 * **Tested up to:** 5.0.0
 * **Stable tag:** trunk
 * **License:** GPLv2 or later
@@ -18,7 +18,6 @@ This add-on will work with:
 
 * version 5 and up
 * version 4 and up
-* version 3 and bellow
 
 ## Installation
 
