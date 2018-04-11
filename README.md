@@ -74,7 +74,7 @@ $post_type_object = get_post_type_object( $post_type ); ?>
 ### Filter available post types
 By default, only post types with parameter `public` will be shown. If you need to show non-public post types use the filter `post_type_selector_post_types` as described below. This filter also allows you to remove post types from the list.
 ```
-add_filter( 'post_type_selector_post_types', function( $post_types, $fields ) {
+add_filter( 'post_type_selector_post_types', function( $post_types, $field ) {
 	$post_types['foo'] = get_post_type_object( 'foo' );
 	unset( $post_types['post'] );
 	return $post_types;
