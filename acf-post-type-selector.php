@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Post Type Selector
 Plugin URI: https://github.com/TimPerry/acf-post-type-selector
 Description: Provides the option to select a single or multiple post types
-Version: 1.0.0
+Version: 1.0.1
 Author: Tim Perry
 Author URI: http://www.forepoint.co.uk
 License: GPLv2 or later
