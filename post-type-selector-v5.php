@@ -115,6 +115,15 @@ class acf_field_post_type_selector extends acf_field {
 			'public' => true,
 		), 'objects' );
 
+		/**
+		 * Filters the array of post types.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @param array $post_types List of post types.
+		 * @param array $field      The field being rendered.
+		 */
+		$post_types = apply_filters( 'post_type_selector_post_types', $post_types, $field );
 
 		// not required: add emmpty/none value
 		if (!$field['required']) {
