@@ -71,9 +71,22 @@ $post_type_object = get_post_type_object( $post_type ); ?>
 <li><a href="<?php echo get_post_type_archive_link( $post_type ); ?>"><?php echo $post_type_object->label; ?></a></li>
 ```
 
+### Filter available post types
+By default, only post types with parameter `public` will be shown. If you need to show non-public post types use the filter `post_type_selector_post_types` as described below. This filter also allows you to remove post types from the list.
+```
+add_filter( 'post_type_selector_post_types', function( $post_types, $fields ) {
+	$post_types['foo'] = get_post_type_object( 'foo' );
+	unset( $post_types['post'] );
+	return $post_types;
+}, 10, 2 );
+```
+
 ## Changelog
+### 1.0.1
+* Filter available post types
+
 ### 1.0.0
-* Support for v5
+* Support for ACF `v5`
 
 ### 0.0.1
 * Initial Release.
