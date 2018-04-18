@@ -3,12 +3,12 @@
   "description": "Post type selector for Advanced Custom Fields.",
   "keywords": ["wordpress", "plugin", "advancedcustomfields", "acf", "custom-post-types"],
   "homepage": "https://github.com/TimPerry/acf-post-type-selector",
-  "license": "GPLv2 or later",
+  "license": "GPL-3.0-or-later",
   "authors": [
     {
       "name": "Tim Perry",
-      "email": "tim@applicious.co",
-      "homepage": "http://applicious.co"
+      "email": "tim.r.perry@gmail.com",
+      "homepage": "https://github.com/TimPerry/"
     }
   ],
   "type": "wordpress-plugin",
