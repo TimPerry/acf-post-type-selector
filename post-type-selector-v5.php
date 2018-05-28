@@ -111,9 +111,7 @@ class acf_field_post_type_selector extends acf_field {
 		// defaults?
 		$field = array_merge( $this->defaults, $field );
 
-		$post_types = get_post_types( array(
-			'public' => true,
-		), 'objects' );
+		$post_types = acf_get_pretty_post_types();
 
 		/**
 		 * Filters the array of post types.
@@ -125,14 +123,9 @@ class acf_field_post_type_selector extends acf_field {
 		 */
 		$post_types = apply_filters( 'post_type_selector_post_types', $post_types, $field );
 
-		// not required: add emmpty/none value
+		// not required: add empty/none value
 		if (!$field['required']) {
-			$obj = new stdClass();
-			$obj->name = "";
-			$obj->labels = new stdClass();
-			$obj->labels->name = "None";
-			array_unshift ( $post_types, $obj);
-
+			$post_types = [ '' => __("None", 'acf') ] + $post_types;
 		}
 
 		// create Field HTML
@@ -146,8 +139,8 @@ class acf_field_post_type_selector extends acf_field {
 
 				$checked[ $field[ 'value' ] ] = 'selected="selected"';
 
-				foreach( $post_types as $post_type ) {
-					echo '<option ' . (isset($checked[ $post_type->name ]) ? $checked [ $post_type->name ] : null) . ' value="' . $post_type->name . '">' . $post_type->labels->name . '</option>';
+				foreach( $post_types as $post_type => $post_type_label ) {
+					echo '<option ' . (isset($checked[ $post_type ]) ? $checked [ $post_type ] : null) . ' value="' . $post_type . '">' . $post_type_label . '</option>';
 				}
 
 				echo '</select>';
@@ -160,11 +153,11 @@ class acf_field_post_type_selector extends acf_field {
 
 				$checked[ $field[ 'value' ] ] = 'checked="checked"';
 
-				foreach( $post_types as $post_type ) {
+				foreach( $post_types as $post_type => $post_type_label ) {
 
 				?>
 
-					<li><input type="radio" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
+					<li><input type="radio" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type; ?>"><label><?php echo $post_type_label; ?></label></li>
 
 				<?php
 
@@ -189,11 +182,11 @@ class acf_field_post_type_selector extends acf_field {
 
 				}
 
-				foreach( $post_types as $post_type ) {
+				foreach( $post_types as $post_type => $post_type_label ) {
 
 				?>
 
-					<li><input type="checkbox" <?php echo ( isset( $checked[ $post_type->name ] ) ) ? $checked[ $post_type->name] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type->name; ?>"><label><?php echo $post_type->labels->name; ?></label></li>
+					<li><input type="checkbox" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type; ?>"><label><?php echo $post_type_label; ?></label></li>
 				<?php
 
 				}
