@@ -157,7 +157,7 @@ class acf_field_post_type_selector extends acf_field {
 
 				?>
 
-					<li><input type="radio" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type; ?>"><label><?php echo $post_type_label; ?></label></li>
+					<li><label><input type="radio" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>" value="<?php echo $post_type; ?>"> <?php echo $post_type_label; ?></label></li>
 
 				<?php
 
@@ -186,7 +186,7 @@ class acf_field_post_type_selector extends acf_field {
 
 				?>
 
-					<li><input type="checkbox" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type; ?>"><label><?php echo $post_type_label; ?></label></li>
+					<li><label><input type="checkbox" <?php echo ( isset( $checked[ $post_type ] ) ) ? $checked[ $post_type] : null; ?> class="<?php echo $field[ 'class' ]; ?>" name="<?php echo $field[ 'name' ]; ?>[]" value="<?php echo $post_type; ?>"><?php echo $post_type_label; ?></label></li>
 				<?php
 
 				}
