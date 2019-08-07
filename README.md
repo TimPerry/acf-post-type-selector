@@ -36,7 +36,7 @@ This add-on can be treated as both a WP plugin and a theme include.
 
         function my_register_fields() {
 	
-             include_once( 'acf-post-type-selector/acf-post-type-selector.php' );
+             include_once( 'acf-post-type-selector/post-type-selector-v4.php' );
     
         }
         
@@ -45,7 +45,7 @@ This add-on can be treated as both a WP plugin and a theme include.
 
         function my_register_fields() {
 	
-             include_once( 'acf-post-type-selector/acf-post-type-selector.php' );
+             include_once( 'acf-post-type-selector/post-type-selector-v5.php' );
     
         }
 
