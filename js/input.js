@@ -16,7 +16,7 @@
 	*  @return	N/A
 	*/
 	
-	$(document).live('acf/setup_fields', function(e, postbox){
+	$(document).on('acf/setup_fields', function(e, postbox){
 		
 		$(postbox).find('.my-field-class').each(function(){
 			
